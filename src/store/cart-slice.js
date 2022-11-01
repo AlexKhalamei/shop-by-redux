@@ -38,10 +38,10 @@ const cartSlice = createSlice({
         existingItem.totalPrice = existingItem.totalPrice - existingItem.price;
       }
     },
-    // updateCart(state, action) {
-    //   state.items = action.payload.items;
-    //   state.itemsQuantity = action.payload.itemsQuantity;
-    // },
+    updateCart(state, action) {
+      state.items = action.payload.items;
+      state.itemsQuantity = action.payload.itemsQuantity;
+    },
   },
 });
 
@@ -55,7 +55,7 @@ export const sendCartData = (cartData) => {
       })
     );
 
-    const sendHttpRequest = async () => {
+    const sendDataHttpRequest = async () => {
       const response = await fetch(
         'https://react-course-http-8220d-default-rtdb.firebaseio.com/cart.json',
         {
@@ -70,7 +70,7 @@ export const sendCartData = (cartData) => {
     };
 
     try {
-      await sendHttpRequest();
+      await sendDataHttpRequest();
 
       dispatchAction(
         mainActions.showStatusMessage({
@@ -92,4 +92,36 @@ export const sendCartData = (cartData) => {
 };
 
 export const cartActions = cartSlice.actions;
+
+export const getCartData = () => {
+  return async (dispatchAction) => {
+    const getDataHttpRequest = async () => {
+      const response = await fetch(
+        'https://react-course-http-8220d-default-rtdb.firebaseio.com/cart.json'
+      );
+
+      if (!response.ok) {
+        throw new Error('Невозможно извлечь данные');
+      }
+
+      const responseData = await response.json();
+
+      return responseData;
+    };
+
+    try {
+      const cartData = await getDataHttpRequest();
+      dispatchAction(cartActions.updateCart(cartData));
+    } catch (error) {
+      dispatchAction(
+        mainActions.showStatusMessage({
+          status: 'error',
+          title: 'Ошибка Запроса',
+          message: 'Ошибка при получении данных корзины!',
+        })
+      );
+    }
+  };
+};
+
 export default cartSlice;

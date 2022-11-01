@@ -4,7 +4,7 @@ import Products from './components/Shop/Products';
 import { useSelector, useDispatch } from 'react-redux';
 import { Fragment, useEffect } from 'react';
 import StatusBarMessage from './components/UI/StatusBarMessage';
-import { sendCartData } from './store/cart-slice';
+import { sendCartData, getCartData } from './store/cart-slice';
 
 let isInitialRunning = true;
 
@@ -14,6 +14,10 @@ function App() {
   const statusMessage = useSelector((state) => state.main.statusMessage);
 
   const dispatchAction = useDispatch();
+
+  useEffect(() => {
+    dispatchAction(getCartData());
+  }, []);
 
   useEffect(() => {
     if (isInitialRunning) {
