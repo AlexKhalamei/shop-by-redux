@@ -4,6 +4,7 @@ import { mainActions } from './main-slice';
 const initialState = {
   items: [],
   itemsQuantity: 0,
+  isCartContentChanged: false,
 };
 
 const cartSlice = createSlice({
@@ -14,6 +15,7 @@ const cartSlice = createSlice({
       const newItem = action.payload;
       const existingItem = state.items.find((item) => item.id === newItem.id);
       state.itemsQuantity++;
+      state.isCartContentChanged = true;
       if (!existingItem) {
         state.items.push({
           id: newItem.id,
@@ -31,6 +33,7 @@ const cartSlice = createSlice({
       const id = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       state.itemsQuantity--;
+      state.isCartContentChanged = true;
       if (existingItem.quantity === 1) {
         state.items = state.items.filter((item) => item.id !== id);
       } else {
@@ -60,7 +63,10 @@ export const sendCartData = (cartData) => {
         'https://react-course-http-8220d-default-rtdb.firebaseio.com/cart.json',
         {
           method: 'PUT',
-          body: JSON.stringify(cartData),
+          body: JSON.stringify({
+            items: cartData.items,
+            itemsQuantity: cartData.itemsQuantity,
+          }),
         }
       );
 
@@ -111,7 +117,12 @@ export const getCartData = () => {
 
     try {
       const cartData = await getDataHttpRequest();
-      dispatchAction(cartActions.updateCart(cartData));
+      dispatchAction(
+        cartActions.updateCart({
+          items: cartData.items || [],
+          itemsQuantity: cartData.itemsQuantity,
+        })
+      );
     } catch (error) {
       dispatchAction(
         mainActions.showStatusMessage({
