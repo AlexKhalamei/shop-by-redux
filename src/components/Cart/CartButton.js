@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './CartButton.module.css';
 
 const CartButton = (props) => {
-  const dispatchFunction = useDispatch();
+  const dispatchAction = useDispatch();
   const itemsQuantity = useSelector((state) => state.cart.itemsQuantity);
 
   const cartVisibilityHandler = () => {
-    dispatchFunction(mainActions.toggleCartVisibility());
+    dispatchAction(mainActions.toggleCartVisibility());
   };
 
   return (
