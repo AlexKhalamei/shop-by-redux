@@ -19,7 +19,7 @@ const ProductItem = (props) => {
     if (existingItem) {
       const updatedExistingItem = { ...existingItem };
       updatedExistingItem.quantity++;
-      updatedExistingItem.price = updatedExistingItem.price + price;
+      updatedExistingItem.totalPrice = updatedExistingItem.totalPrice + price;
 
       const existingItemIndex = updatedItems.findIndex(
         (item) => item.id === id
