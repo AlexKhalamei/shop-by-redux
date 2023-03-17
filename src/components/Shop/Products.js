@@ -1,34 +1,27 @@
-import ProductItem from './ProductItem';
-import styles from './Products.module.css';
+import ProductItem from "./ProductItem";
+import styles from "./Products.module.css";
 
 const DUMMY_ITEMS = [
   {
-    id: '1',
+    id: "1",
     price: 7,
-    title: 'Супер-Товар 1',
+    title: "Product 1",
     description:
-      'Благодаря своему высокому качеству, этот Супер-Товар 1 прослужит вам очень долго.',
+      "The high quality of this Product 1 will last you a very long time.",
   },
   {
-    id: '2',
+    id: "2",
     price: 8,
-    title: 'Супер-Товар 2',
+    title: "Product 2",
     description:
-      'Благодаря своему высокому качеству, этот Супер-Товар 2 прослужит вам очень долго.',
-  },
-  {
-    id: '3',
-    price: 9,
-    title: 'Супер-Товар 3',
-    description:
-      'Благодаря своему высокому качеству, этот Супер-Товар 3 прослужит вам очень долго.',
+      "The high quality of this Product 2 will last you a very long time.",
   },
 ];
 
 const Products = (props) => {
   return (
     <section className={styles.products}>
-      <h2>В нашем магазине товары самого высокого качества</h2>
+      <h2>Our shop offers the highest quality products</h2>
       <ul>
         {DUMMY_ITEMS.map((item) => (
           <ProductItem

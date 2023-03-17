@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { mainActions } from './main-slice';
+import { createSlice } from "@reduxjs/toolkit";
+import { mainActions } from "./main-slice";
 
 const initialState = {
   items: [],
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addItem(state, action) {
@@ -52,17 +52,17 @@ export const sendCartData = (cartData) => {
   return async (dispatchAction) => {
     dispatchAction(
       mainActions.showStatusMessage({
-        status: 'pending',
-        title: 'Отправка Данных',
-        message: 'Данные корзины отправляются на сервер...',
+        status: "pending",
+        title: "Send Data",
+        message: "Cart data is sent to the server...",
       })
     );
 
     const sendDataHttpRequest = async () => {
       const response = await fetch(
-        'https://react-course-http-8220d-default-rtdb.firebaseio.com/cart.json',
+        "https://react-course-http-d5a27-default-rtdb.firebaseio.com/cart.json",
         {
-          method: 'PUT',
+          method: "PUT",
           body: JSON.stringify({
             items: cartData.items,
             itemsQuantity: cartData.itemsQuantity,
@@ -71,7 +71,7 @@ export const sendCartData = (cartData) => {
       );
 
       if (!response.ok) {
-        throw new Error('Ошибка при отправке данных корзины');
+        throw new Error("Error in sending cart data");
       }
     };
 
@@ -80,17 +80,17 @@ export const sendCartData = (cartData) => {
 
       dispatchAction(
         mainActions.showStatusMessage({
-          status: 'success',
-          title: 'Отправка Данных Успешна',
-          message: 'Данные корзины успешно отправлены на сервер!',
+          status: "success",
+          title: "Sending Data Successful",
+          message: "Cart data has been successfully sent to the server!",
         })
       );
     } catch (error) {
       dispatchAction(
         mainActions.showStatusMessage({
-          status: 'error',
-          title: 'Ошибка Запроса',
-          message: 'Ошибка при отправке данных корзины!',
+          status: "error",
+          title: "Request error",
+          message: "Error in sending the cart data!",
         })
       );
     }
@@ -103,11 +103,11 @@ export const getCartData = () => {
   return async (dispatchAction) => {
     const getDataHttpRequest = async () => {
       const response = await fetch(
-        'https://react-course-http-8220d-default-rtdb.firebaseio.com/cart.json'
+        "https://react-course-http-d5a27-default-rtdb.firebaseio.com/cart.json"
       );
 
       if (!response.ok) {
-        throw new Error('Невозможно извлечь данные');
+        throw new Error("Unable to extract data");
       }
 
       const responseData = await response.json();
@@ -126,9 +126,9 @@ export const getCartData = () => {
     } catch (error) {
       dispatchAction(
         mainActions.showStatusMessage({
-          status: 'error',
-          title: 'Ошибка Запроса',
-          message: 'Ошибка при получении данных корзины!',
+          status: "error",
+          title: "Request error",
+          message: "Error in receiving the cart data!",
         })
       );
     }

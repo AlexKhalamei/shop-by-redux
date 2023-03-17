@@ -1,6 +1,6 @@
-import { mainActions } from '../../store/main-slice';
-import { useDispatch, useSelector } from 'react-redux';
-import styles from './CartButton.module.css';
+import { mainActions } from "../../store/main-slice";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./CartButton.module.css";
 
 const CartButton = (props) => {
   const dispatchAction = useDispatch();
@@ -12,7 +12,7 @@ const CartButton = (props) => {
 
   return (
     <button className={styles.button} onClick={cartVisibilityHandler}>
-      <span>Корзина</span>
+      <span>Cart</span>
       <span className={styles.badge}>{itemsQuantity}</span>
     </button>
   );

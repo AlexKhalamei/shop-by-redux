@@ -1,10 +1,10 @@
-import Cart from './components/Cart/Cart';
-import Layout from './components/Layout/Layout';
-import Products from './components/Shop/Products';
-import { useSelector, useDispatch } from 'react-redux';
-import { Fragment, useEffect } from 'react';
-import StatusBarMessage from './components/UI/StatusBarMessage';
-import { sendCartData, getCartData } from './store/cart-slice';
+import Cart from "./components/Cart/Cart";
+import Layout from "./components/Layout/Layout";
+import Products from "./components/Shop/Products";
+import { useSelector, useDispatch } from "react-redux";
+import { Fragment, useEffect } from "react";
+import StatusBarMessage from "./components/UI/StatusBarMessage";
+import { sendCartData, getCartData } from "./store/cart-slice";
 
 let isInitialRunning = true;
 
@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     dispatchAction(getCartData());
-  }, []);
+  }, [dispatchAction]);
 
   useEffect(() => {
     if (isInitialRunning) {
@@ -28,7 +28,7 @@ function App() {
     if (cart.isCartContentChanged) {
       dispatchAction(sendCartData(cart));
     }
-  }, [cart]);
+  }, [cart, dispatchAction]);
 
   return (
     <Fragment>
